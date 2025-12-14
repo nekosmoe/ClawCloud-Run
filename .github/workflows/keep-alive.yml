@@ -5,12 +5,6 @@ on:
     # 每5天运行一次 (UTC 时间早上6点 = 北京时间下午2点)
     - cron: '0 6 */5 * *'
   workflow_dispatch:
-    inputs:
-      debug:
-        description: '调试模式'
-        required: false
-        default: 'true'
-        type: boolean
 
 jobs:
   auto-login:
@@ -35,10 +29,9 @@ jobs:
       - name: 运行自动登录
         env:
           GH_USERNAME: ${{ secrets.GH_USERNAME }}
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PASSWORD: ${{ secrets.GH_PASSWORD }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-          DEBUG_MODE: ${{ inputs.debug || 'true' }}
         run: python scripts/auto_login.py
 
       - name: 上传截图
